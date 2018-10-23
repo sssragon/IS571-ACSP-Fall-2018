@@ -36,7 +36,7 @@
     0:000> x chrome_child!v8::internal::*:ElementsKindTraits<HOLEY_ELEMENTS> >::Set
     10d5ab00          chrome_child!v8::internal::`anonymous namespace'::ElementsAccessorBase<v8::internal::(anonymous namespace)::FastHoleyObjectElementsAccessor,v8::internal::(anonymous namespace)::ElementsKindTraits<HOLEY_ELEMENTS> >::Set (class v8::internal::Handle<v8::internal::JSObject>, unsigned int, class v8::internal::Object *)
     0:000> u 10d5ab00 + 0x17
-    0:000> bp 10d5ab00 + 0x17; g
+    0:000> bp 10d5ab00 + 0x17 ".if (@ebx != 44444444) { gc; }"; g
 
 7. <DevTool> Write break code 
     > obj_array[0] = 0x22222222;
