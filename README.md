@@ -36,12 +36,12 @@
 | 26/09/2018 | Chuseok, Korean Harvest Day
 | 01/10/2018 | Custom Heap Manager(3/3) - Extra | <a href='https://github.com/jaeseolee/IS571-ACSP-Fall-2018/raw/master/lec05/05-Custom Heap Manager-Report02.pdf'>Report #2</a>(~10.21.)
 | 03/10/2018 | National Foundation Day
-| 08/10/2018 | <a href='https://github.com/jaeseolee/IS571-ACSP-Fall-2018/raw/master/lec06/06-Objects Tracking.pdf'>Objects Tracking</a>(1/3) - C++ Objects | <a href='https://github.com/jaeseolee/IS571-ACSP-Fall-2018/raw/master/lec06/bh-dc-07-Sabanal_Yason-WP.pdf'>Reversing C++</a>
-| 10/10/2018 | Objects Tracking(2/3) - Flash Objects
+| 08/10/2018 | <a href='https://github.com/jaeseolee/IS571-ACSP-Fall-2018/raw/master/lec06/06-Objects Tracking.pdf'>Objects Tracking</a>(1/4) - C++ Objects | <a href='https://github.com/jaeseolee/IS571-ACSP-Fall-2018/raw/master/lec06/bh-dc-07-Sabanal_Yason-WP.pdf'>Reversing C++</a>
+| 10/10/2018 | Objects Tracking(2/4) - Flash Objects
 | 15/10/2018 | No class(Midterm week)
 | 17/10/2018 | No class(Midterm week)
-| 22/10/2018 | Objects Tracking(3/3) - Chrome Objects
-| 24/10/2018 | Heap Exploitation(1/2)
+| 22/10/2018 | Objects Tracking(3/4) - Chrome Objects
+| 24/10/2018 | Objects Tracking(4/4) - Chrome Objects<a href='https://github.com/jaeseolee/IS571-ACSP-Fall-2018/raw/master/lec07/07-07-Heap Exploitation.pdf'>Heap Exploitation</a>(1/2)
 | 29/10/2018 | Heap Exploitation(2/2)
 | 31/10/2018 | RW Primitives | Report #3(~11.18.)
 | 05/11/2018 | No class | Supplementary class(12/11/2018 14:00~14:30)
