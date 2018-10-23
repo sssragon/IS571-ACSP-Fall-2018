@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <script>
+            var abHeaps = [];
+            var uiHeaps = [];
+
+            // Create a lot of ArrayBuffer objects which is 0x10000 bytes size
+            // Set Uint32Array DataView into each ArrayBuffer object
+            for (var i = 0; i < 2000; i++) {
+                abHeaps[i] = new ArrayBuffer(0x10000 - 8);
+                uiHeaps[i] = new Uint32Array(abHeaps[i]);
+                uiHeaps[i][0] = 0xdeadf00d;
+            }
+
+            window.alert('Sprayed ArrayBuffer objects');
+
+        </script>
+    </head>
+</html>

