@@ -42,8 +42,8 @@
 | 17/10/2018 | No class(Midterm week)
 | 22/10/2018 | Objects Tracking(3/4) - Chrome Objects
 | 24/10/2018 | Objects Tracking(4/4) - Chrome Objects<br><a href='https://github.com/jaeseolee/IS571-ACSP-Fall-2018/raw/master/lec07/07-Heap Exploitation.pdf'>Heap Exploitation</a>(1/2)
-| 29/10/2018 | Heap Exploitation(2/2)
-| 31/10/2018 | RW Primitives | Report #3(~11.18.)
+| 29/10/2018 | Heap Exploitation(2/2)<br><a href='https://github.com/jaeseolee/IS571-ACSP-Fall-2018/raw/master/lec08/08-RW Primitives.pdf'>RW Primitives</a>(1/2)
+| 31/10/2018 | RW Primitives(2/2) | Report #3(~11.18.)
 | 05/11/2018 | No class | Supplementary class(12/11/2018 14:00~14:30)
 | 07/11/2018 | No class | Supplementary class(14/11/2018 14:00~14:30)
 | 12/11/2018 | Control Flow Hijacking<br>ROP - Return-Oriented Programming | Calling Conventions<br>Intel® 64 and IA-32 Architectures

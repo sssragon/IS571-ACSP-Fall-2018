@@ -1,0 +1,21 @@
+
+Obtain the kernel32.dll base address
+
+00000000 (02) 6a30                     PUSH 0x30
+00000002 (01) 5e                       POP ESI
+; Obtain PEB address using Win32 Thread Information Block
+00000003 (02) 64ad                     LODS EAX, [FS:ESI]
+; Obtain _PEB_LDR_DATA address from PEB
+00000005 (03) 8b700c                   MOV ESI, [EAX+0xC]
+; Obtain kernel32.dll address in InInitializationOrderModuleList
+00000008 (03) 8b761c                   MOV ESI, [ESI+0x1C]
+0000000b (03) 8b5608                   MOV EDX, [ESI+0x8]
+0000000e (04) 807e1c18                 CMP BYTE [ESI+0x1C], 0x18
+00000012 (02) 8b36                     MOV ESI, [ESI]
+00000014 (02) 75f5                     JNZ 0xB
+; the resulting base address of kernel32.dll is in EBX.
+
+------------
+6a 30 5e 64 ad 8b 70 0c 8b 76 1c 8b 56 08 80 7e 1c 18 8b 36 75 f5 
+------------
+
