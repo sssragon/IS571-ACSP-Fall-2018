@@ -49,10 +49,10 @@
 | 12/11/2018 | 09 | Control Flow Hijacking<br>ROP - Return-Oriented Programming | - 14:00\~15:45<br>Calling Conventions<br>Intel® 64 and IA-32 Architectures
 | 14/11/2018 | 10 | hellcode | - 14:00\~15:45
 | 19/11/2018 | 11 | macOS Architecture | Mac OS X and IOS Internals: To the Apple's Core
-| 21/11/2018 | 11 | macOS March-O and Dynamic Linker
-| 26/11/2018 | 11 | macOS Process Internals, Memory Mgmt.,<br> and Objective-C
-| 28/11/2018 | 11 | macOS LaunchD, Mach, and Sandbox
-| 03/12/2018 | 12 |<a href='https://github.com/jaeseolee/IS571-ACSP-Fall-2018/raw/master/lec11/11-Project.pdf'>Project Presentation</a> (1/2) | - 14:00\~14:25<br>\- 14:25\~14:50<br>\- 14:50\~15:15<br>\- 15:15\~15:40<br>(25 minutes/team)
+| 21/11/2018 | | macOS March-O and Dynamic Linker
+| 26/11/2018 | | macOS Process Internals, Memory Mgmt.,<br> and Objective-C
+| 28/11/2018 | | macOS LaunchD, Mach, and Sandbox
+| 03/12/2018 | 12 |<a href='https://github.com/jaeseolee/IS571-ACSP-Fall-2018/raw/master/lec12/12-Project.pdf'>Project Presentation</a> (1/2) | - 14:00\~14:25<br>\- 14:25\~14:50<br>\- 14:50\~15:15<br>\- 15:15\~15:40<br>(25 minutes/team)
 | 05/12/2018 | | Project Presentation (2/2) | \- 14:00\~14:25<br>\- 14:25\~14:50<br>\- 14:50\~15:15<br>\- 15:15\~15:40
 | 10/12/2018 | | No class (Final week)
 | 12/12/2018 | | No class (Final week)
