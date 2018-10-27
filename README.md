@@ -47,7 +47,7 @@
 | 05/11/2018 | | No class | Supplementary class (12/11/2018 and 14/11/2018)
 | 07/11/2018 | | No class | Supplementary class (03/12/2018 and 05/12/2018)
 | 12/11/2018 | 09 | Control Flow Hijacking<br>ROP - Return-Oriented Programming | - 14:00\~15:45<br>Calling Conventions<br>Intel® 64 and IA-32 Architectures
-| 14/11/2018 | 10 | hellcode | - 14:00\~15:45
+| 14/11/2018 | 10 | Shellcode | - 14:00\~15:45
 | 19/11/2018 | 11 | macOS Architecture | Mac OS X and IOS Internals: To the Apple's Core
 | 21/11/2018 | | macOS March-O and Dynamic Linker
 | 26/11/2018 | | macOS Process Internals, Memory Mgmt.,<br> and Objective-C
