@@ -22,7 +22,7 @@
 * If you want to know slide key, email me
 
 ### Schedule
-| Date       |  Lecture No.    | Topic           | Notes 
+| Date       |  No.    | Topic           | Notes 
 |------------|-----------------|-----------------|-------
 | 27/08/2018 | 01 | <a href='https://github.com/jaeseolee/IS571-ACSP-Fall-2018/raw/master/lec01/01-Introduction.pdf'>Introduction</a>
 | 29/08/2018 | 02 | <a href='https://github.com/jaeseolee/IS571-ACSP-Fall-2018/raw/master/lec02/02-Security Vulnerability.pdf'>Security Vulnerability</a> (1/2)
