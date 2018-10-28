@@ -1,0 +1,329 @@
+1. execute lec08_basic_rw_primitives.exe
+    -> mia address: 0x1afe84
+    index > 0
+    mia[0] = 0 (0)
+
+
+2. <WinDbg> Overwrite 0x40000000 into mia.m_length's BaseAddress
+
+    0:001> dc 1afe84 L8
+    001afe84  00000064 003d2060 001afd70 001afecc  d...` =.p.......
+    001afe94  00c81af8 00000000 001afedc 00c813e1  ................
+    
+    0:001> .reload /i *
+    *** WARNING: Unable to verify checksum for C:\Users\IEUser\Desktop\lec08\src\lec08_basic_rw_primitives\Release\lec08_basic_rw_primitives.exe
+
+    0:001> dt lec08_basic_rw_primitives!MyIntArray 001afe84  
+    +0x000 m_length         : 0n100
+    +0x004 m_pArray         : 0x003d2060  -> 0n0
+
+    0:001> ed 001afe84 40000000
+    0:001> dt lec08_basic_rw_primitives!MyIntArray 001afe84  
+    +0x000 m_length         : 0n1073741824
+    +0x004 m_pArray         : 0x003d2060  -> 0n0
+
+    0:001> g
+
+
+3. Find the signature(0xffeeffee) of the Heap
+
+    index > 1073741824   <-- 0x40000000
+    ...
+    
+    index > 1073674218
+    mia[1073674218] = -1114130 (ffeeffee)  <-- Heap Signature
+    index > 1073674219
+    mia[1073674219] = 0 (0)
+    index > 1073674220
+    mia[1073674220] = 3735720 (3900a8)
+    index > 1073674221
+    mia[1073674221] = 3735720 (3900a8)
+    index > 1073674222
+    mia[1073674222] = 3735552 (390000)
+    index > 1073674223
+    mia[1073674223] = 3735552 (390000)
+    index > 1073674216                     <-- (index for Heap Signature) - 2: 390000
+    mia[1073674216] = -225002051 (f296bdbd)
+
+
+4. Heap Analysis
+
+    0:001> !address 003d2060 
+
+    Usage:                  Heap
+    Base Address:           00390000
+    End Address:            00414000
+    Region Size:            00084000 ( 528.000 kB)
+    State:                  00001000          MEM_COMMIT
+    Protect:                00000004          PAGE_READWRITE
+    Type:                   00020000          MEM_PRIVATE
+    Allocation Base:        00390000
+    Allocation Protect:     00000004          PAGE_READWRITE
+    More info:              heap owning the address: !heap 0x390000
+    More info:              heap segment
+    More info:              heap entry containing the address: !heap -x 0x3d2060
+
+
+    Content source: 1 (target), length: fa0
+
+    0:001> !heap -hl -h 390000
+    SEGMENT HEAP ERROR: failed to initialize the extention
+    Index   Address  Name      Debugging options enabled
+    1:   00390000 
+        Segment at 00390000 to 00490000 (00084000 bytes committed)
+        Flags:                00000002
+        ForceFlags:           00000000
+        Granularity:          8 bytes
+        Segment Reserve:      00100000
+        Segment Commit:       00002000
+        DeCommit Block Thres: 00000800
+        DeCommit Total Thres: 00002000
+        Total Free Size:      000001fd
+        Max. Allocation Size: 7ffdefff
+        Lock Variable at:     00390138
+        Next TagIndex:        0000
+        Maximum TagIndex:     0000
+        Tag Entries:          00000000
+        PsuedoTag Entries:    00000000
+        Virtual Alloc List:   003900a0
+        Uncommitted ranges:   00390090
+        FreeList[ 00 ] at 003900c4: 00413070 . 003d1d48   (2 blocks)
+
+        Heap entries for Segment00 in Heap 00390000
+            address: psize . size  flags   state (requested size)
+            00390000: 00000 . 00588 [101] - busy (587)
+            00390588: 00588 . 00240 [101] - busy (23f)
+            003907c8: 00240 . 00020 [101] - busy (18)
+            003907e8: 00020 . 00f30 [101] - busy (f24)
+            00391718: 00f30 . 00c70 [101] - busy (c66)
+            00392388: 00c70 . 00048 [101] - busy (3c)
+            003923d0: 00048 . 00038 [101] - busy (30)
+            00392408: 00038 . 00080 [101] - busy (78)
+            00392488: 00080 . 00080 [101] - busy (78)
+            00392508: 00080 . 00228 [101] - busy (220)
+            00392730: 00228 . 00050 [101] - busy (42)
+            00392780: 00050 . 00080 [101] - busy (78)
+            00392800: 00080 . 00018 [101] - busy (10)
+            00392818: 00018 . 00050 [101] - busy (46)
+            00392868: 00050 . 00080 [101] - busy (78)
+            003928e8: 00080 . 00018 [101] - busy (10)
+            00392900: 00018 . 00018 [101] - busy (10)
+            00392918: 00018 . 00050 [101] - busy (42)
+            00392968: 00050 . 00070 [101] - busy (65)
+            003929d8: 00070 . 00070 [101] - busy (64)
+            00392a48: 00070 . 00208 [101] - busy (200)
+            00392c50: 00208 . 00208 [101] - busy (200)
+            00392e58: 00208 . 00030 [101] - busy (24)
+            00392e88: 00030 . 00030 [101] - busy (24)
+            00392eb8: 00030 . 00038 [101] - busy (30)
+            00392ef0: 00038 . 00028 [101] - busy (20)
+            00392f18: 00028 . 00028 [101] - busy (20)
+            00392f40: 00028 . 00028 [101] - busy (20)
+            00392f68: 00028 . 00028 [101] - busy (20)
+            00392f90: 00028 . 00028 [101] - busy (20)
+            00392fb8: 00028 . 00028 [101] - busy (20)
+            00392fe0: 00028 . 00080 [101] - busy (78)
+            00393060: 00080 . 00018 [101] - busy (10)
+            00393078: 00018 . 00018 [101] - busy (10)
+            00393090: 00018 . 00018 [101] - busy (10)
+            003930a8: 00018 . 00018 [101] - busy (10)
+            003930c0: 00018 . 00028 [101] - busy (20)
+            003930e8: 00028 . 00028 [101] - busy (20)
+            00393110: 00028 . 00028 [101] - busy (20)
+            00393138: 00028 . 00028 [101] - busy (20)
+            00393160: 00028 . 00028 [101] - busy (20)
+            00393188: 00028 . 00028 [101] - busy (20)
+            003931b0: 00028 . 00028 [101] - busy (20)
+            003931d8: 00028 . 00028 [101] - busy (20)
+            00393200: 00028 . 00028 [101] - busy (20)
+            00393228: 00028 . 00028 [101] - busy (20)
+            00393250: 00028 . 00028 [101] - busy (20)
+            00393278: 00028 . 00028 [101] - busy (20)
+            003932a0: 00028 . 00018 [101] - busy (d)
+            003932b8: 00018 . 00050 [101] - busy (42)
+            00393308: 00050 . 03d20 [101] - busy (3d1f)
+            00397028: 03d20 . 378b0 [101] - busy (378a8) Internal 
+            003ce8d8: 378b0 . 00800 [101] - busy (7f8) Internal 
+
+            LFH data region at 003ce8e0 (subsegment 003cf0f0):
+                003ce8f0: 00028 - busy (20)
+                003ce918: 00028 - busy (20)
+                003ce940: 00028 - busy (20)
+                003ce968: 00028 - busy (20)
+                003ce990: 00028 - busy (20)
+                003ce9b8: 00028 - busy (20)
+                003ce9e0: 00028 - busy (1f)
+                003cea08: 00028 - busy (1b)
+                003cea30: 00028 - busy (1b)
+                003cea58: 00028 - busy (1e)
+                003cea80: 00028 - busy (1c)
+                003ceaa8: 00028 - free
+                003cead0: 00028 - free
+                003ceaf8: 00028 - free
+                003ceb20: 00028 - free
+                003ceb48: 00028 - free
+                003ceb70: 00028 - free
+                003ceb98: 00028 - free
+                003cebc0: 00028 - free
+                003cebe8: 00028 - free
+                003cec10: 00028 - free
+                003cec38: 00028 - free
+                003cec60: 00028 - free
+                003cec88: 00028 - free
+                003cecb0: 00028 - free
+                003cecd8: 00028 - free
+                003ced00: 00028 - free
+                003ced28: 00028 - free
+                003ced50: 00028 - free
+                003ced78: 00028 - free
+                003ceda0: 00028 - free
+                003cedc8: 00028 - free
+                003cedf0: 00028 - free
+                003cee18: 00028 - free
+                003cee40: 00028 - free
+                003cee68: 00028 - free
+                003cee90: 00028 - free
+                003ceeb8: 00028 - free
+                003ceee0: 00028 - free
+                003cef08: 00028 - free
+                003cef30: 00028 - free
+                003cef58: 00028 - free
+                003cef80: 00028 - free
+                003cefa8: 00028 - free
+                003cefd0: 00028 - free
+                003ceff8: 00028 - free
+                003cf020: 00028 - free
+                003cf048: 00028 - free
+                003cf070: 00028 - free
+                003cf098: 00028 - free
+
+            003cf0d8: 00800 . 00400 [101] - busy (3f8) Internal 
+            003cf4d8: 00400 . 00210 [101] - busy (208)
+            003cf6e8: 00210 . 00408 [101] - busy (400)
+            003cfaf0: 00408 . 003c8 [101] - busy (3bc)
+            003cfeb8: 003c8 . 00020 [101] - busy (18)
+            003cfed8: 00020 . 00808 [101] - busy (800)
+            003d06e0: 00808 . 000a8 [101] - busy (9c)
+            003d0788: 000a8 . 00030 [101] - busy (28)
+            003d07b8: 00030 . 00040 [101] - busy (31)
+            003d07f8: 00040 . 00020 [101] - busy (16)
+            003d0818: 00020 . 00030 [101] - busy (24)
+            003d0848: 00030 . 00020 [101] - busy (14)
+            003d0868: 00020 . 00020 [101] - busy (17)
+            003d0888: 00020 . 00038 [101] - busy (2b)
+            003d08c0: 00038 . 00020 [101] - busy (17)
+            003d08e0: 00020 . 00050 [101] - busy (46)
+            003d0930: 00050 . 00030 [101] - busy (25)
+            003d0960: 00030 . 00040 [101] - busy (37)
+            003d09a0: 00040 . 00068 [101] - busy (59)
+            003d0a08: 00068 . 00048 [101] - busy (3c)
+            003d0a50: 00048 . 00020 [101] - busy (17)
+            003d0a70: 00020 . 00018 [101] - busy (e)
+            003d0a88: 00018 . 00240 [101] - busy (236)
+            003d0cc8: 00240 . 00048 [101] - busy (3e)
+            003d0d10: 00048 . 00050 [101] - busy (45)
+            003d0d60: 00050 . 00020 [101] - busy (12)
+            003d0d80: 00020 . 00020 [101] - busy (18)
+            003d0da0: 00020 . 00050 [101] - busy (41)
+            003d0df0: 00050 . 00020 [101] - busy (17)
+            003d0e10: 00020 . 00020 [101] - busy (14)
+            003d0e30: 00020 . 00018 [101] - busy (f)
+            003d0e48: 00018 . 00020 [101] - busy (16)
+            003d0e68: 00020 . 00030 [101] - busy (28)
+            003d0e98: 00030 . 00030 [101] - busy (27)
+            003d0ec8: 00030 . 00020 [101] - busy (14)
+            003d0ee8: 00020 . 00018 [101] - busy (10)
+            003d0f00: 00018 . 00058 [101] - busy (4c)
+            003d0f58: 00058 . 00058 [101] - busy (4c)
+            003d0fb0: 00058 . 00020 [101] - busy (12)
+            003d0fd0: 00020 . 00808 [101] - busy (800)
+            003d17d8: 00808 . 00088 [101] - busy (80)
+            003d1860: 00088 . 00060 [101] - busy (54)
+            003d18c0: 00060 . 00018 [101] - busy (c)
+            003d18d8: 00018 . 00020 [101] - busy (18)
+            003d18f8: 00020 . 00448 [101] - busy (440)
+            003d1d40: 00448 . 00070 [100]
+            003d1db0: 00070 . 00230 [101] - busy (220)
+            003d1fe0: 00230 . 00078 [101] - busy (6a)
+            003d2058: 00078 . 40008 [101] - busy (40000)
+            00412060: 40008 . 01008 [101] - busy (1000)
+            00413068: 01008 . 00f78 [100]
+            00413fe0: 00f78 . 00020 [111] - busy (1d)
+            00414000:      0007c000      - uncommitted bytes.
+
+    0:001> dt _HEAP 390000
+    ntdll!_HEAP
+    +0x000 Entry            : _HEAP_ENTRY
+    +0x008 SegmentSignature : 0xffeeffee
+    +0x00c SegmentFlags     : 0
+    +0x010 SegmentListEntry : _LIST_ENTRY [ 0x3900a8 - 0x3900a8 ]
+    +0x018 Heap             : 0x00390000 _HEAP
+    +0x01c BaseAddress      : 0x00390000 Void
+    +0x020 NumberOfPages    : 0x100
+    +0x024 FirstEntry       : 0x00390588 _HEAP_ENTRY
+    +0x028 LastValidEntry   : 0x00490000 _HEAP_ENTRY
+    +0x02c NumberOfUnCommittedPages : 0x7c
+    +0x030 NumberOfUnCommittedRanges : 1
+    +0x034 SegmentAllocatorBackTraceIndex : 0
+    +0x036 Reserved         : 0
+    +0x038 UCRSegmentList   : _LIST_ENTRY [ 0x413ff0 - 0x413ff0 ]
+    +0x040 Flags            : 2
+    +0x044 ForceFlags       : 0
+    +0x048 CompatibilityFlags : 0
+    +0x04c EncodeFlagMask   : 0x100000
+    +0x050 Encoding         : _HEAP_ENTRY
+    +0x058 PointerKey       : 0x5d26db39
+    +0x05c Interceptor      : 0
+    +0x060 VirtualMemoryThreshold : 0xfe00
+    +0x064 Signature        : 0xeeffeeff
+    +0x068 SegmentReserve   : 0x100000
+    +0x06c SegmentCommit    : 0x2000
+    +0x070 DeCommitFreeBlockThreshold : 0x800
+    +0x074 DeCommitTotalFreeThreshold : 0x2000
+    +0x078 TotalFreeSize    : 0x1fd
+    +0x07c MaximumAllocationSize : 0x7ffdefff
+    +0x080 ProcessHeapsListIndex : 1
+    +0x082 HeaderValidateLength : 0x138
+    +0x084 HeaderValidateCopy : (null) 
+    +0x088 NextAvailableTagIndex : 0
+    +0x08a MaximumTagIndex  : 0
+    +0x08c TagEntries       : (null) 
+    +0x090 UCRList          : _LIST_ENTRY [ 0x413fe8 - 0x413fe8 ]
+    +0x098 AlignRound       : 0xf
+    +0x09c AlignMask        : 0xfffffff8
+    +0x0a0 VirtualAllocdBlocks : _LIST_ENTRY [ 0x3900a0 - 0x3900a0 ]
+    +0x0a8 SegmentList      : _LIST_ENTRY [ 0x390010 - 0x390010 ]
+    +0x0b0 AllocatorBackTraceIndex : 0
+    +0x0b4 NonDedicatedListLength : 0
+    +0x0b8 BlocksIndex      : 0x00390150 Void
+    +0x0bc UCRIndex         : 0x00390590 Void
+    +0x0c0 PseudoTagEntries : (null) 
+    +0x0c4 FreeLists        : _LIST_ENTRY [ 0x3d1d48 - 0x413070 ]
+    +0x0cc LockVariable     : 0x00390138 _HEAP_LOCK
+    +0x0d0 CommitRoutine    : 0x5d26db39     long  +5d26db39
+    +0x0d4 FrontEndHeap     : 0x00397030 Void
+    +0x0d8 FrontHeapLockCount : 0
+    +0x0da FrontEndHeapType : 0x2 ''
+    +0x0dc Counters         : _HEAP_COUNTERS
+    +0x130 TuningParameters : _HEAP_TUNING_PARAMETERS
+
+    0:001> g
+
+
+5. Find the signature(0xffeeffee) of the Heap
+
+    index > 0         <-- mia.m_pArray's address = 0x390000 + 4 * 0n67608 (1073741824 - 1073674216)
+    ...
+
+    index > 49527531  <-- (0x0c0c0c0c - (0x390000 + 4 * 0n67608))/4
+
+
+6. <WinDbg> Crash!
+    (104c.13c): Access violation - code c0000005 (first chance)
+    First chance exceptions are reported before any exception handling.
+    This exception may be expected and handled.
+    eax=02f3baeb ebx=001afe90 ecx=003d2060 edx=00000008 esi=60602fd9 edi=001afe90
+    eip=00c81113 esp=001afd70 ebp=001afe9c iopl=0         nv up ei ng nz ac po cy
+    cs=001b  ss=0023  ds=0023  es=0023  fs=003b  gs=0000             efl=00010293
+    lec08_basic_rw_primitives!main+0x103:
+    00c81113 ff3481          push    dword ptr [ecx+eax*4] ds:0023:0c0c0c0c=????????
