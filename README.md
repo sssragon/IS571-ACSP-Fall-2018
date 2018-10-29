@@ -68,3 +68,5 @@
 | 6 | 20183237, 20184276 | CVE-2016-3210 | Internet Explorer |
 | 7 | 20183170, 20145347 | CVE-2016-7200, 7201 | Edge |
 | 8 | 20183421, 20185403 | Bug-Number: 716044  | Chrome |
+
+Copyright 2017 Jaeseo Lee
